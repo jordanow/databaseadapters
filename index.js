@@ -1,14 +1,17 @@
-var artists = require('./data/artists.js');
-
+var mongo = require('./adapters/mongo.js');
 
 module.exports = (function () {
-  console.log('============= Beginning procedure ============');
+  console.time('=============> Total runtime');
+
+  console.log('============= Beginning program ============');
 
   var db = databaseSelected(process.argv);
 
-  console.log('=================================================');
+  console.log('------------------------------------------------')
   console.log('Database selected = ', db);
-  console.log('=================================================');
+  console.log('------------------------------------------------')
+
+  return saveToDB(db);
 })();
 
 function databaseSelected(args) {
@@ -23,13 +26,36 @@ function databaseSelected(args) {
   switch (db) {
     case 'neo':
     case 'neo4j':
-      db = 'neo4j';
+      db = 'Neo4j';
       break;
-    case 'hbase':
+    case 'HBase':
       break;
     default:
-      db = 'mongo';
+      db = 'MongoDB';
   }
 
   return db;
+};
+
+function shutdown(err, data) {
+  if (err) {
+    console.log('============= Error in process ============');
+    console.log(err);
+  }
+
+  console.log('============= Shutting down process ============');
+  console.timeEnd('=============> Total runtime');
+
+  process.exit(0);
+};
+
+function saveToDB(db) {
+  switch (db) {
+    case 'MongoDB':
+      mongo(shutdown);
+      break;
+    case 'Neo4j':
+    case 'HBase':
+  }
+  return;
 };
