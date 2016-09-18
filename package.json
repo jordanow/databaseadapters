@@ -1,0 +1,18 @@
+{
+  "name": "program",
+  "version": "1.0.0",
+  "description": "Save data from json file to various databases using appropriate data converters",
+  "main": "index.js",
+  "scripts": {
+      "start" : "node index.js"
+  },
+  "author": "Group 10",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  },
+  "dependencies": {
+    "mongod": "^1.3.0",
+    "mongoose": "^4.6.0"
+  }
+}
