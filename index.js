@@ -1,4 +1,5 @@
 var mongo = require('./adapters/mongo.js');
+var neo4j = require('./adapters/neo4j.js');
 
 module.exports = (function () {
   console.time('=============> Total runtime');
@@ -17,11 +18,14 @@ module.exports = (function () {
 function databaseSelected(args) {
   var db;
 
-  args.forEach(function (value, key) {
-    if (value.indexOf('db') > -1) {
-      db = value.split('=')[1];
-    }
-  });
+  // Third parameter is the selected db
+  db = args[2];
+
+  // args.forEach(function (value, key) {
+  //   if (value.indexOf('db') > -1) {
+  //     db = value.split('=')[1];
+  //   }
+  // });
 
   switch (db) {
     case 'neo':
@@ -55,6 +59,8 @@ function saveToDB(db) {
       mongo(shutdown);
       break;
     case 'Neo4j':
+      neo4j(shutdown);
+      break;
     case 'HBase':
   }
   return;
