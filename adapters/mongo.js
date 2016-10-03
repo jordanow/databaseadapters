@@ -93,6 +93,12 @@ module.exports = function (callback) {
       return i.userID;
     });
 
+    var userIDFromFriends = _.map(seed.userTags, function (i) {
+      return i.userID;
+    });
+
+    userIDs = userIDs.concat(userIDFromFriends);
+
     var uniqUserIDs = _.uniq(userIDs);
 
     console.time('Time to save ' + uniqUserIDs.length + ' users');
@@ -126,7 +132,7 @@ module.exports = function (callback) {
     console.log('============= Saving user tags ============');
     console.time('Time to save ' + seed.userTags.length + ' user tags');
 
-    UserTag.remove(function (err, data) {
+    UserTag.remove(function (err) {
       if (err) {
         console.log(err);
         cb(err);
@@ -167,7 +173,7 @@ module.exports = function (callback) {
 
           user.friends = _.map(friends, function (i) {
             return i.friendID;
-          })
+          });
 
           user.save(next);
         }, function (err) {
@@ -193,7 +199,7 @@ module.exports = function (callback) {
         console.time('Time to update ' + users.length + ' users');
 
         async.mapLimit(users, 500, function (user, next) {
-          user.artists = _.filter(seed.userArtists, function (i) {
+          user.listened_to = _.filter(seed.userArtists, function (i) {
             return i.userID === user._id;
           });
 
@@ -224,15 +230,15 @@ module.exports = function (callback) {
     function (cb) {
       saveUserTags(cb);
     },
-    function (cb) {
-      saveUsers(cb);
-    },
-    function (cb) {
-      saveUserFriends(cb);
-    },
-    function (cb) {
-      saveUserArtists(cb);
-    }
+    // function (cb) {
+    //   saveUsers(cb);
+    // },
+    // function (cb) {
+    //   saveUserFriends(cb);
+    // },
+    // function (cb) {
+    //   saveUserArtists(cb);
+    // }
 
   ], function (err) {
     if (err) {

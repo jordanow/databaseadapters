@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
 var UserSchema = new Schema({
   _id: Number,
   friends: [Number],
-  artists: [{
+  listened_to: [{
     artistID: {
       type: Number,
       index: true

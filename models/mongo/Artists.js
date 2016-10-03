@@ -5,12 +5,15 @@ var mongoose = require('mongoose'),
 
 // Models
 var ArtistSchema = new Schema({
-  name: String,
+  name: {
+    index: true,
+    type: String
+  },
   url: {
     index: true,
     type: String
   },
-  pictureUrl: {
+  pictureURL: {
     index: true,
     type: String
   },

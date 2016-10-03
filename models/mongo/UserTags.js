@@ -17,7 +17,10 @@ var UserTagSchema = new Schema({
     type: Number,
     index: true
   },
-  timestamp: Number
+  timestamp: {
+    index: true,
+    type: Number
+  }
 });
 
 var UserTag = mongoose.model('UserTag', UserTagSchema);
